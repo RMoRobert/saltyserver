@@ -27,7 +27,7 @@ class User {
     
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     Set<String> roles = ['ROLE_USER'] as Set
     
     User() {}
