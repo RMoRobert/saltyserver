@@ -1,0 +1,30 @@
+# Offline deployment: use a pre-built image (no build, no network).
+#
+# Prereq: load the image on the target machine first:
+#   docker load -i saltyserver-image.tar
+#
+# Then run:
+#   docker compose -f docker-compose.offline.yml up -d
+#
+# Copy to target: this file, saltyserver-image.tar, and optional .env
+
+services:
+  saltyserver:
+    image: saltyserver:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/app/data/saltydb
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: ""
+      SALTY_RECIPELIBRARY_IMAGES_STORAGE_PATH: /app/data/images
+      # Suggested to change the two below or use .env; see notes in docker-compose.yml
+      SALTY_ADMIN_PASSWORD: "password"
+      SALTY_JWT_SECRET: mocgfGBu5XxPU4b3j4qtsE70U1jgcZSOPMSouSwdW1o
+      SALTY_JWT_EXPIRATION: 1814400000
+    volumes:
+      - saltyserver_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  saltyserver_data:

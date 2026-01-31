@@ -1,0 +1,32 @@
+# Docker Compose: run Salty Server with env-configured paths and persistent data.
+#
+# Usage:
+#   docker compose up --build
+#   App: http://localhost:8080   H2 console: http://localhost:8080/h2console
+#
+# Override env in .env or docker compose run -e VAR=value
+
+services:
+  saltyserver:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      # H2 database file path (inside container; volume persists it)
+      SPRING_DATASOURCE_URL: jdbc:h2:file:/app/data/saltydb
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: ""
+      # Recipe image uploads directory
+      SALTY_RECIPELIBRARY_IMAGES_STORAGE_PATH: /app/data/images
+      # Default admin user (username: admin), or set in .env for production
+      SALTY_ADMIN_PASSWORD: "password"
+      # Change to unique value, or set in .env for production
+      SALTY_JWT_SECRET: mocgfGBu5XxPU4b3j4qtsE70U1jgcZSOPMSouSwdW1o
+      SALTY_JWT_EXPIRATION: 1814400000
+    volumes:
+      # Persist H2 DB and uploaded images
+      - saltyserver_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  saltyserver_data:
