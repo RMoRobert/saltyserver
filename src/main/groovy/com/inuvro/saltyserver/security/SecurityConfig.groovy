@@ -1,5 +1,6 @@
 package com.inuvro.saltyserver.security
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -24,6 +25,9 @@ class SecurityConfig {
     
     private final JwtAuthenticationFilter jwtAuthenticationFilter
     
+    @Value('${salty.remember-me.seconds:1209600}')
+    private int rememberMeTokenValiditySeconds  // default 14 days
+
     SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter
     }
@@ -72,9 +76,15 @@ class SecurityConfig {
                     .defaultSuccessUrl("/recipes", true)
                     .permitAll()
             }
+            .rememberMe { remember ->
+                remember
+                    .key("salty-remember-me-key")
+                    .tokenValiditySeconds(rememberMeTokenValiditySeconds)
+            }
             .logout { logout ->
                 logout
                     .logoutSuccessUrl("/login?logout")
+                    .deleteCookies("remember-me")
                     .permitAll()
             }
             // Allow H2 console frames
