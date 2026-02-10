@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${recipe.name + ' - Salty'}">Recipe - Salty</title>
-    <link href="/css/bootstrap.css" rel="stylesheet">
+    <th:block th:replace="~{fragments/css-headers :: css-headers}"></th:block>
     <style th:inline="none">
         body {
             background-color: #f5f5f5;
@@ -256,6 +256,6 @@
             </div>
         </div>
     </div>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <th:block th:replace="~{fragments/css-headers :: bootstrap-js}"></th:block>
 </body>
 </html>

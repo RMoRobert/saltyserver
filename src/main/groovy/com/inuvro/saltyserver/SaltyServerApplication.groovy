@@ -14,9 +14,4 @@ class SaltyServerApplication {
     static void main(String[] args) {
         SpringApplication.run(SaltyServerApplication, args)
     }
-
-    @GetMapping("/")
-    String index() {
-        "Hello, World!"
-    }
 }

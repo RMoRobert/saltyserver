@@ -66,7 +66,7 @@ class SecurityConfig {
             .securityMatcher("/**")
             .authorizeHttpRequests { auth ->
                 auth
-                    .requestMatchers("/login", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                    .requestMatchers("/login", "/css/**", "/js/**", "/images/**", "/fonts/**", "/error").permitAll()
                     .requestMatchers("/h2-console/**").permitAll()  // H2 console for dev
                     .anyRequest().authenticated()
             }

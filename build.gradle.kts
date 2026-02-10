@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.inuvro"
-version = "1.0.1-SNAPSHOT"
+version = "1.0.2-SNAPSHOT"
 description = "Salty Server"
 
 java {
